@@ -2,6 +2,8 @@ package vatansms
 
 import (
 	"encoding/xml"
+	"fmt"
+	"log"
 	"net/url"
 	"regexp"
 	"strings"
@@ -10,7 +12,7 @@ import (
 func PrepareXml(data interface{}) url.Values {
 	xmlData, err := xml.Marshal(data)
 	if err != nil {
-		panic(err.Error())
+		log.Printf(fmt.Sprintf("PrepareXml Error: %s", err.Error()))
 	}
 	xmlString := string(xmlData)
 	values := url.Values{}

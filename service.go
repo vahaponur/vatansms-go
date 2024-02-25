@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/tiaguinho/gosoap"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -17,7 +18,7 @@ func (data OneToN) Send1N() (SendResult, error) {
 	fmt.Println(values)
 	req, err := http.PostForm(Url1N, values)
 	if err != nil {
-		panic(err.Error())
+		log.Printf(fmt.Sprintf("Send1N Request Error: %s", err.Error()))
 	}
 	bodyBytes, err := ioutil.ReadAll(req.Body)
 	response, _ := SmsResponse(string(bodyBytes))
@@ -29,7 +30,8 @@ func (data NToN) SendNN() (SendResult, error) {
 	values := PrepareXml(data)
 	req, err := http.PostForm(UrlNN, values)
 	if err != nil {
-		panic(err.Error())
+		log.Printf(fmt.Sprintf("SendNN Request Error: %s", err.Error()))
+
 	}
 	bodyBytes, err := ioutil.ReadAll(req.Body)
 	response, _ := SmsResponse(string(bodyBytes))
