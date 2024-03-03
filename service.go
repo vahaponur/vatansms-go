@@ -19,8 +19,12 @@ func (data OneToN) Send1N() (SendResult, error) {
 	req, err := http.PostForm(Url1N, values)
 	if err != nil {
 		log.Printf(fmt.Sprintf("Send1N Request Error: %s", err.Error()))
+		return SendResult{}, err
 	}
 	bodyBytes, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		return SendResult{}, err
+	}
 	response, _ := SmsResponse(string(bodyBytes))
 	return response, nil
 
@@ -31,9 +35,12 @@ func (data NToN) SendNN() (SendResult, error) {
 	req, err := http.PostForm(UrlNN, values)
 	if err != nil {
 		log.Printf(fmt.Sprintf("SendNN Request Error: %s", err.Error()))
-
+		return SendResult{}, err
 	}
 	bodyBytes, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		return SendResult{}, err
+	}
 	response, _ := SmsResponse(string(bodyBytes))
 	return response, nil
 }
